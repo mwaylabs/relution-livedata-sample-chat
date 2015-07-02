@@ -1,0 +1,25 @@
+{
+  "generator-m": {
+    "answers": {
+      "appName": "Relutoin Live Data",
+      "appId": "com.mway.relution.livedatatest",
+      "bowerPackages": [
+        "angular-translate#~2.6.0",
+        "angular-translate-loader-static-files#~2.6.0"
+      ],
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "plugins": [
+        "org.apache.cordova.device",
+        "org.apache.cordova.dialogs",
+        "org.apache.cordova.network-information",
+        "org.apache.cordova.splashscreen",
+        "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
+        "org.apache.cordova.vibration"
+      ],
+      "appModule": "relutoinLiveData"
+    }
+  }
+}

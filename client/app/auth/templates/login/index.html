@@ -1,0 +1,30 @@
+<ion-view hide-nav-bar="true">
+  <ion-content>
+    <div class="row row-center">
+      <div class="col">
+        <ion-list class="list card login-list">
+          <ion-item class="item-divider item-positive">
+            <span class="row row-no-padding">
+              <span class="col-66">
+                <h3 class="title light">{{'Login'|translate}}</h3>
+              </span>
+              <span class="col-33 text-right">
+                <ion-spinner class="login-loader {{loginC.loader.cssClass}}" ng-show="loginC.loader.onLoad" icon="{{loginC.loader.loadingIcon}}"></ion-spinner>
+              </span>
+            </span>
+          </ion-item>
+          <translation-select-item></translation-select-item>
+          <div ng-if="!loginC.service.isLoggedIn" ng-include="loginC.include"></div>
+        </ion-list>
+        <ion-list ng-if="loginC.service.isLoggedIn">
+          <ion-item class="item-text-wrap">
+            <p>You are already Logged in!</p>
+          </ion-item>
+          <ion-item ui-sref="tab.messenger">
+            Chat
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

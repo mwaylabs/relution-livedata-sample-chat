@@ -1,0 +1,66 @@
+<ion-view hide-back-button="true" can-swipe-back="false" nav-transition="none" hide-nav-bar="true">
+  <div class="bar bar-header bar-light">
+    <material-sidebar-toggle></material-sidebar-toggle>
+    <h1 class="title text-positive">{{'ABOUT'| translate}}</h1>
+  </div>
+  <ion-content overflow-scroll="false" class="about white-bg has-header" has-bouncing="false">
+    <div class="list">
+      <div class="item item-image about-header">
+        <div class="circle">
+          <img ng-src="about/assets/images/icon-76@2x.png"/>
+        </div>
+      </div>
+      <div class="item item-text-wrap">
+        <p>Version</p>
+        <h2>{{aboutC.appVersion}}</h2>
+      </div>
+      <div class="item item-text-wrap imprint-mway">
+        <h2 class="title">{{'IMPRINT_DESIGN_CODE'|translate}}</h2>
+        <span class="row">
+          <span class="col-75">
+            <h2>M-Way Solutions GmbH</h2>
+            <p>Stresemannstr. 72</p>
+            <p>70172 Stuttgart</p>
+          </span>
+          <span class="col-25">
+            <img class="right mway-logo" src="about/assets/images/logo_mway.svg"/>
+          </span>
+        </span>
+      </div>
+      <a ng-click="aboutC.browser('http://www.mwaysolutions.com')" class="item item-text-wrap item-icon-right">
+        <i class="icon ion-android-globe"></i>
+        http://www.mwaysolutions.com
+      </a>
+
+      <div class="item item-text-wrap no-ellipsis">
+        <h2 class="title">
+          {{'LICENSE_USAGE'|translate:'{system: "IOS"}'}}
+        </h2>
+      </div>
+      <ion-item ng-repeat="package in aboutC.bowerPackages">
+        <span ng-if="package.name" class="row">
+          <span class="col-50">
+            {{package.name}}
+          </span>
+          <span class="col-50 text-right">
+            <p>{{package.version}}</p>
+          </span>
+        </span>
+        <span ng-if="!package.name">
+          {{package}}
+        </span>
+      </ion-item>
+      <ion-item class="item-text-wrap">
+        <h2 class="title">{{'LICENSE_MIT_HEADLINE'|translate}}</h2>
+
+        <p>&nbsp;</p>
+
+        <p>{{'LICENSE_MIT_TEXT'|translate}}</p>
+
+        <p>&nbsp;</p>
+
+        <p>{{'LICENSE_MIT_UPPERCASE_TEXT'|translate}}</p>
+      </ion-item>
+    </div>
+  </ion-content>
+</ion-view>

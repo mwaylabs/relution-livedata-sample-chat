@@ -1,0 +1,27 @@
+<ion-view>
+  <ion-nav-title>
+    Speak to {{channelC.receiver.givenName}}
+  </ion-nav-title>
+  <ion-content class="has-footer" delegate-handle="chat-list">
+    <ion-list>
+      <ion-item class="col-80 item-text-wrap" ng-repeat="message in filtered = (chatC.messages|filter:filterMessages)" ng-class="{'sender col-offset-20 text-right item-icon-left': chatC.sender.uuid === message.attributes.senderUuid, 'receiver item-icon-right': chatC.sender.uuid !== message.attributes.senderUuid}">
+        <i class="icon" ng-class="{'ion-android-done ': !message.attributes.isRead, 'ion-android-done-all': message.attributes.isRead}"></i>
+          <span class="row">
+            <span class="col-66 text-left date" ng-if="chatC.sender.uuid !== message.attributes.senderUuid">{{chatC.receiver.name}} {{'wrote'|translate}} {{'on'|translate}}</span>
+            <span class="col-66 text-left date" ng-if="chatC.sender.uuid === message.attributes.senderUuid">&nbsp;</span>
+            <span class="date col-33 text-right">{{message.attributes.dateFormated}}</span>
+          </span>
+          <p ng-bind-html="message.attributes.message|unsafe"></p>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+  <form name="chatForm" ng-submit="chatC.addMessage(chatForm)" novalidate style="position:relative;">
+    <div class="bar bar-footer item-input-inset" style="position: fixed" ng-class="{'bar-footer': ionic.Platform.isAndroid(), 'bar-subfooter': !ionic.Platform.isAndroid()}">
+      <label class="item-input-wrapper">
+        <i class="icon ion-android-chat placeholder-icon"></i>
+        <input ng-model="chatC.form.message" ng-minlength="1" type="text" name="message" placeholder="{{'MESSAGE'|translate}}" />
+      </label>
+      <button ng-disabled="chatForm.$invalid" class="button button-clear button-icon ion-android-send icon"></button>
+    </div>
+  </form>
+</ion-view>

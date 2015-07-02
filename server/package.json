@@ -1,0 +1,11 @@
+{
+  "name": "todo",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "lorem-ipsum": "^1.0.3"
+  }
+}

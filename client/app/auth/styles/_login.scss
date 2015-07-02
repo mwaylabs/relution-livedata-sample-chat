@@ -1,0 +1,30 @@
+.login-list{
+  .item-divider{
+    @extend .item-calm;
+    min-height: 22px;
+  }
+
+  .button.button-dark.button-icon {
+    border-color: $light !important;
+    background: $calm !important;
+  }
+}
+.login-loader{
+  svg{
+    height: 18px;
+    width: 18px;
+  }
+  &.balanced{
+    svg{
+      stroke:$light;
+    }
+  }
+  &.error{
+    svg{
+      stroke:$assertive;
+    }
+  }
+}
+.item-select select{
+  padding-bottom: 10px;
+}

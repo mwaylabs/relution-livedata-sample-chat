@@ -1,0 +1,22 @@
+//background-image: url('../assets/images/6.jpg');
+.platform-android {
+  .scroll-content {
+    background-image: url('../assets/images/landscape.png');
+  }
+  @media only screen and (orientation:portrait){
+    .scroll-content {
+      background-image: url('../assets/images/portrait.png');
+    }
+  }
+}
+.platform-ios {
+  .scroll-content {
+    background-image: url('../assets/images/ios-landscape.png');
+  }
+  @media only screen and (orientation:portrait){
+    /* portrait styles here */
+    .scroll-content {
+      background-image: url('../assets/images/ios-portrait.png');
+    }
+  }
+}

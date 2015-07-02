@@ -1,0 +1,52 @@
+.item{
+  .date{
+    font-size: 10px;
+  }
+
+  &.sender{
+    p,.date{
+      color: white;
+    }
+    background: $calm;
+    color: $light;
+    margin-bottom: 22px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    .ion-android-done-all{
+      color: $citrus;
+    }
+  }
+  &.receiver{
+    background: $royal;
+    margin-bottom: 22px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    p, .date{
+      color: $light;
+    }
+    .ion-android-done-all{
+      color: $energized;
+    }
+    .ion-android-done{
+      color: $light;
+    }
+  }
+}
+
+.platform-android{
+  [name="chatForm"]{
+    .bar-subfooter{
+      @extend .bar-calm;
+      bottom: 0;
+    }
+  }
+}
+.platform-ios{
+  [name="chatForm"]{
+    .bar-subfooter{
+      @extend .bar-positive;
+      bottom: $tabs-height;
+    }
+  }
+}
+

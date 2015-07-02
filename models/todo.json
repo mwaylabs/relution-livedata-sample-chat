@@ -1,0 +1,35 @@
+{
+  "name": "todo",
+  "label": "Todo",
+  "attributes": [
+    {
+      "name": "title",
+      "type": "String",
+      "mandatory": true,
+      "key": false
+    }, {
+      "name": "_id",
+      "type": "String",
+      "mandatory": false,
+      "key": true
+    },
+    {
+      "name": "order",
+      "type": "Integer",
+      "mandatory": false,
+      "key": false
+    },
+    {
+      "name": "completed",
+      "type": "Boolean",
+      "mandatory": false,
+      "key": false
+    },
+    {
+      "name": "public",
+      "type": "Boolean",
+      "mandatory": false,
+      "key": false
+    }
+  ]
+}
