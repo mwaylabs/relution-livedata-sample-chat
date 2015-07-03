@@ -43,13 +43,5 @@ angular.module('auth', ['main', 'relutionClientSecurity'])
             controller: 'LoginCtrl as loginC'
           }
         }
-        //,
-        //resolve: {
-        //  login: function ($q, LoginService) {
-        //    LoginService.setUsername('pascal');
-        //    LoginService.setPassword('hallo1234');
-        //    return $q.when(LoginService.logon());
-        //  }
-        //}
       });
   });
