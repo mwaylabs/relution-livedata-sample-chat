@@ -1,5 +1,5 @@
 #Relution-livedata-sample-chat
-![](http://www.relution.io/de/wp-content/themes/Divi/images/logo.png)
+
 ###Dependencies:
 - node
 - cordova
