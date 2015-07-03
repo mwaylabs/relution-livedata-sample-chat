@@ -20,6 +20,11 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 'use strict';
+/**
+ * @ngdoc interface
+ * @name auth
+ * @description the auth module
+ */
 angular.module('auth', ['main', 'relutionClientSecurity'])
   .config(function ($stateProvider, $relutionSecurityConfigProvider, Config) {
     $relutionSecurityConfigProvider.setLayoutStyle('INPUT_ICONS');

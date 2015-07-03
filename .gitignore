@@ -27,3 +27,4 @@ client/docs
 bower_components
 layout
 test.json
+client/.publish

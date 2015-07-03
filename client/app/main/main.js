@@ -20,6 +20,11 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 'use strict';
+/**
+ * @ngdoc interface
+ * @name main
+ * @description the common module
+ */
 angular.module('main', [])
   .filter('unsafe', function ($sce) {
     return $sce.trustAsHtml;

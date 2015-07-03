@@ -43,3 +43,5 @@ start in browser
 	gulp watch
 ````
 there are many more Gulp Commands are available full Documentation can be read [here](https://github.com/mwaylabs/generator-m)
+
+###[Docs](http://mwaylabs.github.io/relution-livedata-sample-chat)

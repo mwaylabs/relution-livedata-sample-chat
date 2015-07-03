@@ -20,16 +20,72 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 'use strict';
+/**
+ * @ngdoc controller
+ * @name messenger:ChatCtrl
+ * @requires $scope
+ * @requires $stateParams
+ * @requires $q
+ * @requires $timeout
+ * @requires $ionicScrollDelegate
+ * @requires $rootScope
+ * @requires $filter
+ * @requires $ionicLoading
+ * @requires $state
+ * @requires $window
+ * @requires main:Config
+ * @requires messenger:UserMessengerService
+ * @requires messenger:MessageService
+ * @requires RelutionLiveData
+ * @requires main:AlertService
+ * @requires LoginService
+ */
 angular.module('messenger')
-  .controller('ChatCtrl', function ChatCtrl($scope, $stateParams, $q, $timeout, $ionicScrollDelegate, $rootScope, $filter, $ionicLoading, $state, $cordovaMedia, $window, Config, UserMessengerService, MessageService, RelutionLiveData, AlertService, LoginService) {
+  .controller('ChatCtrl', function ChatCtrl($scope, $stateParams, $q, $timeout, $ionicScrollDelegate, $rootScope, $filter, $ionicLoading, $state, $window, Config, UserMessengerService, MessageService, RelutionLiveData, AlertService, LoginService) {
     var self = this;
+    /**
+     * @ngdoc property
+     * @name _LIST
+     * @description the delegat-handle for the list
+     * @propertyOf messenger:ChatCtrl
+     */
     var _LIST = 'chat-list';
+    /**
+     * @ngdoc property
+     * @name messages
+     * @description available Messages
+     * @propertyOf messenger:ChatCtrl
+     */
     this.messages = null;
+    /**
+     * @ngdoc property
+     * @name form
+     * @description bottom input field
+     * @propertyOf messenger:ChatCtrl
+     */
     this.form = {
       message: null
     };
+    /**
+     * @ngdoc property
+     * @name sender
+     * @description the chat user that wil be send
+     * @propertyOf messenger:ChatCtrl
+     */
     this.sender = null;
+    /**
+     * @ngdoc property
+     * @name receiver
+     * @description receiver chat partner
+     * @propertyOf messenger:ChatCtrl
+     */
     this.receiver = null;
+    /**
+     * @ngdoc method
+     * @name mediaPlay
+     * @description checks user audio settings and play a dong
+     * @methodOf messenger:ChatCtrl
+     */
     this.mediaPlay = function () {
       MessageService.getAudioMessageSetting().then(function (setting) {
         if (self.media && setting) {
@@ -37,6 +93,12 @@ angular.module('messenger')
         }
       });
     };
+    /**
+     * @ngdoc method
+     * @name gongMessage
+     * @description load the mp3 from a server
+     * @methodOf messenger:ChatCtrl
+     */
     this.gongMessage = function () {
       self.media = new Media(Config.ENV.SERVER_URL + '/mway/chat-sample/messenger/assets/audio/doorbell.mp3', function (result) {
         RelutionLiveData.Debug.trace('success', result);
@@ -47,10 +109,21 @@ angular.module('messenger')
         RelutionLiveData.Debug.trace('status', status);
       });
     };
-    //dependency injection javascript
+    /**
+     * @ngdoc method
+     * @name gongMessage
+     * @description remove a js script from the chat
+     * @methodOf messenger:ChatCtrl
+     */
     var strippedString = function (originalString) {
       return originalString.replace(/<.*?script.*?>.*?<\/.*?script.*?>/igm, '');
     };
+    /**
+     * @ngdoc method
+     * @name errorOnMessage
+     * @description something get wrong on save model
+     * @methodOf messenger:ChatCtrl
+     */
     this.errorOnMessage = function () {
       AlertService.map({
         cssClass: 'calm',
@@ -64,6 +137,12 @@ angular.module('messenger')
         ]
       });
     };
+    /**
+     * @ngdoc method
+     * @name addMessage
+     * @description add a message from the sender
+     * @methodOf messenger:ChatCtrl
+     */
     this.addMessage = function (form) {
       if (!form.$valid) {
         self.errorOnMessage();
@@ -75,6 +154,7 @@ angular.module('messenger')
         self.errorOnMessage();
         return false;
       }
+      //add a new Model to the Message Collection
       MessageService.collection.create({
           'senderName': self.sender.username,
           'senderUuid': self.sender.uuid,
@@ -98,21 +178,33 @@ angular.module('messenger')
         }
       );
     };
+    //filtered chat messages from other users
     $scope.filterMessages = function (obj) {
       if ('attributes' in obj && obj.attributes.senderUuid === self.sender.uuid && obj.attributes.receiverUuid === self.receiver.uuid || 'attributes' in obj && obj.attributes.senderUuid === self.receiver.uuid && obj.attributes.receiverUuid === self.sender.uuid) {
         return true;
       }
       return false;
     };
+    /**
+     * @ngdoc method
+     * @name changeRead
+     * @description if the sender see the receiver messages it will be toggle state isRead to true
+     * @methodOf messenger:ChatCtrl
+     */
     this.changeRead = function () {
       angular.forEach(self.messages, function (model) {
-        console.log(model.get('senderUuid'), self.sender.uuid, model.get('isRead'));
         if (model.get('senderUuid') !== self.sender.uuid && !model.get('isRead')) {
           model.set('isRead', true).save();
         }
       });
       $rootScope.$applyAsync();
     };
+    /**
+     * @ngdoc method
+     * @name debug
+     * @description debugging Collection
+     * @methodOf messenger:ChatCtrl
+     */
     this.debug = function () {
       console.log('sender', this.sender);
       console.log('receiver', this.receiver);
@@ -120,10 +212,22 @@ angular.module('messenger')
         console.log(model.attributes, i);
       });
     };
+    /**
+     * @ngdoc method
+     * @name scrollBottom
+     * @description scroll to bottom after start, add etc ..
+     * @methodOf messenger:ChatCtrl
+     */
     this.scrollBottom = function () {
       console.log('try to scroll down');
       $ionicScrollDelegate.$getByHandle(_LIST).scrollBottom(true);
     };
+    /**
+     * @ngdoc method
+     * @name _addEventListener
+     * @description some events on the Message Collection
+     * @methodOf messenger:ChatCtrl
+     */
     var _addEventListener = function () {
       MessageService.collection.on('remove', function (model) {
         RelutionLiveData.Debug.info('remove');
@@ -155,18 +259,20 @@ angular.module('messenger')
       });
       $timeout(self.scrollBottom, 500);
     };
-
+    //User is not logged in transition to login
     $scope.$on('$ionicView.beforeEnter', function () {
       if (!LoginService.isLoggedIn) {
         return $state.go('auth.login');
       }
     });
-    //$scope.$on('$ionicView.afterEnter', function () {
-    //  //console.log('after Enter');
-    //  //if ($window.cordova) {
-    //  //  self.gongMessage();
-    //  //}
-    //});
+    //activate sound
+    $scope.$on('$ionicView.afterEnter', function () {
+      //console.log('after Enter');
+      //if ($window.cordova) {
+      //  //self.gongMessage();
+      //}
+    });
+    //fetch chat messages
     $scope.$on('$ionicView.enter', function () {
       if (LoginService.isLoggedIn) {
         self.sender = UserMessengerService.currentUser;

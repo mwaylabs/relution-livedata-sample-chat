@@ -20,24 +20,64 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 'use strict';
+/**
+ * @ngdoc service
+ * @name messenger:UserMessengerService
+ * @description get the available Chat partner for your user
+ * @requires $filter
+ * @requires $rootScope
+ * @requires $state
+ * @requires RelutionLiveData
+ * @requires main:Config
+ * @requires main:AlertService
+ * @requires UserService
+ */
 angular.module('messenger')
   .service('UserMessengerService', function UserMessengerService($filter, $rootScope, $state, RelutionLiveData, Config, AlertService, UserService) {
     var self = this;
+    /**
+     * @ngdoc property
+     * @name currentUser
+     * @description the loggedin user
+     * @propertyOf messenger:UserMessengerService
+     */
     this.currentUser = null;
+    /**
+     * @ngdoc property
+     * @name conversationsUser
+     * @description the available other Group users
+     * @propertyOf messenger:UserMessengerService
+     */
     this.conversationsUser = null;
-    //https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+
+    /**
+     * @ngdoc property
+     * @name filterByUuid
+     * @description filter a user by uuid https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+     * @propertyOf messenger:UserMessengerService
+     */
     this.filterByUuid = function (obj) {
       if ('attributes' in obj && obj.attributes.uuid === this) {
         return obj.attributes;
       }
       return false;
     };
-
+    /**
+     * @ngdoc property
+     * @name getUserByUuid
+     * @description return a user by uuid
+     * @propertyOf messenger:UserMessengerService
+     */
     this.getUserByUuid = function (uuid) {
       var user = this.conversationsUser.filter(self.filterByUuid, uuid);
       return user[0].attributes;
     };
-
+    /**
+     * @ngdoc property
+     * @name handleError
+     * @description error on get users
+     * @propertyOf messenger:UserMessengerService
+     */
     this.handleError = function (model, error) {
       // eventually an xhr response was incorrectly passed instead of an error
       if (error && !error.message && error.responseJSON && error.responseJSON.error) {
@@ -59,7 +99,6 @@ angular.module('messenger')
           message = message.substring(0, index) + '<br />' + message.substring(index + 1);
         }
       }
-
       // show an error popup
       AlertService.map({
         cssClass: 'assertive',
@@ -73,15 +112,31 @@ angular.module('messenger')
         ]
       });
     };
+    /**
+     * @ngdoc property
+     * @name model
+     * @description the user Model
+     * @propertyOf messenger:UserMessengerService
+     */
     this.model = RelutionLiveData.Model.extend({
       idAttribute: 'uuid'
     });
-
+    /**
+     * @ngdoc property
+     * @name collection
+     * @description the collectionType of user Models
+     * @propertyOf messenger:UserMessengerService
+     */
     this.collection = RelutionLiveData.Collection.extend({
       model: self.model,
       url: Config.ENV.SERVER_URL + Config.SERVER_API_PATH + Config.MESSENGER_USERS_URL
     });
-
+    /**
+     * @ngdoc property
+     * @name fetch
+     * @description get all users
+     * @propertyOf messenger:UserMessengerService
+     */
     this.fetch = function () {
       if (!this.conversationsUser) {
         this.conversationsUser = new this.collection();

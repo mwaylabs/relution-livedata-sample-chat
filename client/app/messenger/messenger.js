@@ -20,6 +20,11 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 'use strict';
+/**
+ * @ngdoc interface
+ * @name messenger
+ * @description the messenger module
+ */
 angular.module('messenger', ['main'])
   .config(function ($stateProvider) {
     $stateProvider

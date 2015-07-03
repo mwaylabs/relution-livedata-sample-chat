@@ -20,17 +20,52 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 'use strict';
+/**
+ * @ngdoc controller
+ * @name messenger:MessagesCtrl
+ * @requires $scope
+ * @requires $q
+ * @requires $state
+ * @requires UserMessengerService
+ * @requires MessageService
+ * @requires LoginService
+ */
 angular.module('messenger')
   .controller('MessagesCtrl', function MessagesCtrl($scope, UserMessengerService, MessageService, $q, $state, LoginService) {
     var self = this;
+    /**
+     * @ngdoc property
+     * @name media
+     * @description toggle media settings
+     * @propertyOf messenger:MessagesCtrl
+     */
     this.media = {
       on: true
     };
+    /**
+     * @ngdoc property
+     * @name media
+     * @description service to get GroupUsers for chatting
+     * @propertyOf messenger:MessagesCtrl
+     */
     this.service = UserMessengerService;
+    /**
+     * @ngdoc property
+     * @name users
+     * @description all available Users fo chatting
+     * @propertyOf messenger:MessagesCtrl
+     */
     this.users = [];
+    /**
+     * @ngdoc method
+     * @name changeAudioSetting
+     * @description still not ready but wil be send a sound when message is inocming
+     * @methodOf messenger:MessagesCtrl
+     */
     this.changeAudioSetting = function () {
       return MessageService.setAudioMessageSetting(self.media.on);
     };
+
     $scope.$on('$ionicView.beforeEnter', function () {
       if (!LoginService.isLoggedIn) {
         return $state.go('auth.login');

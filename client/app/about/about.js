@@ -20,6 +20,11 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 'use strict';
+/**
+ * @ngdoc interface
+ * @name about
+ * @description the about module
+ */
 angular.module('about', [])
   .config(function ($stateProvider) {
     $stateProvider

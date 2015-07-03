@@ -29,6 +29,12 @@
 angular.module('auth')
   .controller('LoginCtrl', function LoginCtrl($scope, $state, $filter, LoginService, AlertService, $relutionSecurityConfig) {
     var self = this;
+    /**
+     * @ngdoc property
+     * @name loader
+     * @description the smal loader on the right on login
+     * @propertyOf auth:LoginCtrl
+     */
     this.loader = {
       //loadingIcon: ionic.Platform.isAndroid() ? 'android' : 'ios',
       cssClass: 'balanced',
@@ -38,7 +44,19 @@ angular.module('auth')
         self.loader.onLoad = !self.loader.onLoad;
       }
     };
+    /**
+     * @ngdoc property
+     * @name service
+     * @description the relution-client-security Login Service
+     * @propertyOf auth:LoginCtrl
+     */
     this.service = LoginService;
+    /**
+     * @ngdoc method
+     * @name getMessage
+     * @description build a error message if form is not valid
+     * @methodOf auth:LoginCtrl
+     */
     this.getMessage = function (errors) {
       var message = 'Please check following Fields: ';
       angular.forEach(errors, function (error) {
@@ -46,6 +64,12 @@ angular.module('auth')
       });
       return message;
     };
+    /**
+     * @ngdoc method
+     * @name alert
+     * @description a small alert window for the User
+     * @methodOf auth:LoginCtrl
+     */
     this.alert = function (title, message) {
       AlertService.map({
         cssClass: 'assertive',
@@ -59,30 +83,44 @@ angular.module('auth')
         ]
       });
     };
+    /**
+     * @ngdoc method
+     * @name submit
+     * @description form is submitted
+     * @methodOf auth:LoginCtrl
+     */
     this.submit = function (loginform) {
       if (loginform.$valid) {
-        if (self.loader.cssClass !== 'error') {
+
+        if (self.loader.cssClass === 'error') {
           self.loader.toggle();
-          self.loader.cssClass !== 'balanced';
+          self.loader.cssClass = 'balanced';
         }
+        // LoginService login
         this.service.logon()
+          //successfully logged in
           .success(function () {
             self.loader.toggle();
-            self.loader.cssClass !== 'balanced';
+            self.loader.cssClass = 'balanced';
           })
+          //error
           .error(function (e) {
             self.loader.cssClass = 'error';
+            //mostly offline
             if (e.status === 0) {
               self.alert('Following Errors Occured', 'please check your Internet Connection');
             }
+            //Unautthorized
             if (e.status === 403 || e.status === 401) {
-              self.alert('Following Errors Occured', 'User not exist');
+              self.alert('Following Errors Occured', 'User is Unauthorized please check your credentials');
             }
+            //Url not available
             if (e.status === 404) {
               self.alert('Following Errors Occured', 'This Url is not available');
             }
           });
       } else {
+        //Form not valid
         AlertService.map({
           cssClass: 'assertive',
           title: 'Following Errors Occured',
@@ -97,7 +135,9 @@ angular.module('auth')
       }
     };
     $scope.$on('$ionicView.afterEnter', function () {
+      // on enter add configuration for relution-client-security icons
       self.icons = $relutionSecurityConfig.iconSet;
+      //the login template
       self.include = $relutionSecurityConfig.view;
     });
   });

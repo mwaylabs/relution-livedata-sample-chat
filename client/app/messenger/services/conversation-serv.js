@@ -20,9 +20,21 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 'use strict';
+/**
+ * @ngdoc service
+ * @name messenger:Conversation
+ * @description get and return the chat conversation from a user and a receiver
+ * @requires RelutionLiveData
+ */
 angular.module('messenger')
-  .service('Conversation', function (RelutionLiveData) {
+  .service('Conversation', function Conversation(RelutionLiveData) {
     var self = this;
+    /**
+     * @ngdoc property
+     * @name model
+     * @description the Conversation model
+     * @propertyOf messenger:Conversation
+     */
     this.model = RelutionLiveData.Model.extend({
       idAttribute: 'id',
       parse: function (resp) {
@@ -36,6 +48,12 @@ angular.module('messenger')
         return RelutionLiveData.Model.prototype.parse.apply(this, arguments);
       }
     });
+    /**
+     * @ngdoc property
+     * @name collection
+     * @description the Conversation collection
+     * @propertyOf messenger:Conversation
+     */
     this.collection = RelutionLiveData.Collection.extend({
       model: self.model
     });
