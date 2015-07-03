@@ -125,23 +125,27 @@ angular.module('messenger')
       $ionicScrollDelegate.$getByHandle(_LIST).scrollBottom(true);
     };
     var _addEventListener = function () {
-      MessageService.collection.on('remove', function () {
-        console.log('remove');
+      MessageService.collection.on('remove', function (model) {
+        RelutionLiveData.Debug.info('remove');
+        RelutionLiveData.Debug.warning(JSON.stringify(model));
         $rootScope.$applyAsync();
       });
-      MessageService.collection.on('add', function (er) {
-        console.log('add', er);
-        self.mediaPlay();
+      MessageService.collection.on('add', function (model) {
+        //self.mediaPlay();
+        RelutionLiveData.Debug.info('add');
+        RelutionLiveData.Debug.warning(JSON.stringify(model));
         $timeout(self.scrollBottom, 500);
         $rootScope.$applyAsync();
 
       });
-      MessageService.collection.on('set', function () {
-        console.log('set');
+      MessageService.collection.on('set', function (model) {
+        RelutionLiveData.Debug.info('set');
+        RelutionLiveData.Debug.warning(JSON.stringify(model));
         $rootScope.$applyAsync();
       });
-      MessageService.collection.on('sync', function () {
-        console.log('sync controller');
+      MessageService.collection.on('sync', function (res) {
+        RelutionLiveData.Debug.info('sync');
+        RelutionLiveData.Debug.warning(JSON.stringify(res));
         self.messages = MessageService.collection.models;
         self.changeRead();
       });
@@ -157,12 +161,12 @@ angular.module('messenger')
         return $state.go('auth.login');
       }
     });
-    $scope.$on('$ionicView.afterEnter', function () {
-      console.log('after Enter');
-      if ($window.cordova) {
-        self.gongMessage();
-      }
-    });
+    //$scope.$on('$ionicView.afterEnter', function () {
+    //  //console.log('after Enter');
+    //  //if ($window.cordova) {
+    //  //  self.gongMessage();
+    //  //}
+    //});
     $scope.$on('$ionicView.enter', function () {
       if (LoginService.isLoggedIn) {
         self.sender = UserMessengerService.currentUser;

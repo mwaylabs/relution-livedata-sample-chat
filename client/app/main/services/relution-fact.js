@@ -23,7 +23,7 @@
 angular.module('main')
   .factory('RelutionLiveData',
   function RelutionLiveData($window) {
-    $window.Relution.setDebug(true);
+    $window.Relution.setDebug(false);
     return $window.Relution.LiveData;
   }
 );
