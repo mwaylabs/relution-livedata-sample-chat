@@ -1,4 +1,4 @@
-#Relution-livedata-sample-chat
+#Relution Livedata Sample Chat
 
 ###Dependencies:
 - node
