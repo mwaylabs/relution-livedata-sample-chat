@@ -14,7 +14,7 @@ gulp.task('clean:docs', function (cb) {
 });
 var options = {
   html5Mode: true,
-  title: "Relutionlivedata Sample Chat - "+ json.version,
+  title: "Relution Livedata Sample Chat - "+ json.version,
   image: "http://www.relution.io/de/wp-content/themes/Divi/images/logo.png",
   imageLink: "https://github.com/mwaylabs/relution-livedata-sample-chat"
 };
