@@ -1,6 +1,6 @@
 NG_DOCS={
   "sections": {
-    "api": "Relutionlivedata Sample Chat - 0.0.1"
+    "api": "Relution Livedata Sample Chat - 0.0.1"
   },
   "pages": [
     {
@@ -149,7 +149,7 @@ NG_DOCS={
       "js/prettify.js"
     ],
     "styles": [],
-    "title": "Relutionlivedata Sample Chat - 0.0.1",
+    "title": "Relution Livedata Sample Chat - 0.0.1",
     "html5Mode": true,
     "editExample": true,
     "navTemplate": false,
